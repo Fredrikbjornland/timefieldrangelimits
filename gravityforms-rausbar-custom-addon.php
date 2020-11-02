@@ -3,7 +3,7 @@
  * Plugin Name: Gravity Forms Raus Bar Custom Add-On
  * Plugin URI: https://github.com/Fredrikbjornland/timefieldrangelimits
  * Description: Custom Gravity Forms Add-On for Raus Bar.
- * Version: 1.0
+ * Version: 1.1
  * Author: Spire Consulting
  * Author URI: https://www.spireconsulting.no
  */
@@ -43,7 +43,7 @@ function rausbar_enqueue_datepicker_script( $form, $is_ajax ) {
 	wp_enqueue_script(
 		'rausbar-gf-datepicker-script',
 		plugins_url( 'assets/js/gf-date-picker-options.js' , __FILE__ ),
-		['jquery'],
+		['jquery', 'gform_datepicker_init'],
 		RAUSBAR_GF_ADDON_VERSION
 	);
 }

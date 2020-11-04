@@ -15,14 +15,37 @@ if ( ! defined( 'WPINC' ) ) die;
 if ( ! is_plugin_active( 'gravityforms/gravityforms.php' ) ) return;
 
 define( 'RAUSBAR_GF_ADDON_VERSION', get_plugin_data( __FILE__ )['Version'] );
+/**
+ * Get the chosen day from the datefield to check if it is saturday or sunday
+ */
+$chosenDate = 0;
+function getChosenday( $result, $value, $form, $field ) {
+	global $chosenDate;
+	//Replece from / to - for strtotime() to assume the string is in european order
+	$convertedDate = str_replace("/", "-", $value);
+	$chosenDate = date('w', strtotime($convertedDate));
+}
 
 /**
  * Validate that the time field is between 19:00 and 23:00.
  */
 function rausbar_validate_time_field( $result, $value, $form, $field ) {
+	global $chosenDate;
 	$time     = strtotime( implode( ':', $value ) );
 	$min_time = '19:00';
 	$max_time = '23:00';
+	/**
+	 * Extend open hours to 18:00 if it
+	 * is between week 47 and 51, and the chosen date is a friday or satuday
+	 */
+	$ddate = date("Y-m-d");
+	$date = new DateTime($ddate);
+	$week = $date->format("W");
+	if ( 47 <= $week && $week <= 51 ) {
+		if ( $chosenDate == 5 || $chosenDate == 6) {
+			$min_time = '18:00';
+		}
+	}
 
 	if ( $time == false ) {
 		$result['is_valid'] = false;

@@ -25,7 +25,7 @@ function getChosenday( $result, $value, $form, $field ) {
 	$convertedDate = str_replace("/", "-", $value);
 	$chosenDate = date('w', strtotime($convertedDate));
 }
-
+add_filter( 'gform_field_validation_1_7', 'getChosenDay', 10, 4 );
 /**
  * Validate that the time field is between 19:00 and 23:00.
  */

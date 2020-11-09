@@ -19,18 +19,25 @@ define( 'RAUSBAR_GF_ADDON_VERSION', get_plugin_data( __FILE__ )['Version'] );
  * Get the chosen day from the datefield to check if it is saturday or sunday
  */
 $chosenDate = 0;
+$chosenWeek = 0;
 function getChosenday( $result, $value, $form, $field ) {
 	global $chosenDate;
+	global $chosenWeek;
 	//Replece from / to - for strtotime() to assume the string is in european order
 	$convertedDate = str_replace("/", "-", $value);
+	//Get day number to check if it is friday
 	$chosenDate = date('w', strtotime($convertedDate));
+	//Get week number to check if it is between week 47-51
+	$chosenWeek = date('W', strtotime($convertedDate));
+	return $result;
 }
-add_filter( 'gform_field_validation_1_7', 'getChosenDay', 10, 4 );
+add_filter( 'gform_field_validation_2_7', 'getChosenDay', 10, 4 );
 /**
  * Validate that the time field is between 19:00 and 23:00.
  */
 function rausbar_validate_time_field( $result, $value, $form, $field ) {
 	global $chosenDate;
+	global $chosenWeek;
 	$time     = strtotime( implode( ':', $value ) );
 	$min_time = '19:00';
 	$max_time = '23:00';
@@ -38,10 +45,7 @@ function rausbar_validate_time_field( $result, $value, $form, $field ) {
 	 * Extend open hours to 18:00 if it
 	 * is between week 47 and 51, and the chosen date is a friday or satuday
 	 */
-	$ddate = date("Y-m-d");
-	$date = new DateTime($ddate);
-	$week = $date->format("W");
-	if ( 47 <= $week && $week <= 51 ) {
+	if ( 47 <= $chosenWeek && $chosenWeek <= 51 ) {
 		if ( $chosenDate == 5 || $chosenDate == 6) {
 			$min_time = '18:00';
 		}

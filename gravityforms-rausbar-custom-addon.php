@@ -12,7 +12,7 @@
 if ( ! defined( 'WPINC' ) ) die;
 
 // Don't run if the Gravity Forms plugin is not active.
-if ( ! is_plugin_active( 'gravityforms-master/gravityforms.php' ) ) return;
+if ( ! is_plugin_active( 'gravityforms/gravityforms.php' ) ) return;
 
 define( 'RAUSBAR_GF_ADDON_VERSION', get_plugin_data( __FILE__ )['Version'] );
 /**
@@ -31,7 +31,7 @@ function getChosenday( $result, $value, $form, $field ) {
 	$chosenWeek = date('W', strtotime($convertedDate));
 	return $result;
 }
-add_filter( 'gform_field_validation_1_7', 'getChosenDay', 10, 4 );
+add_filter( 'gform_field_validation_2_7', 'getChosenDay', 10, 4 );
 /**
  * Validate that the time field is between 19:00 and 23:00.
  */
@@ -61,7 +61,7 @@ function rausbar_validate_time_field( $result, $value, $form, $field ) {
 
 	return $result;
 }
-add_filter( 'gform_field_validation_1_8', 'rausbar_validate_time_field', 10, 4 );
+add_filter( 'gform_field_validation_2_8', 'rausbar_validate_time_field', 10, 4 );
 
 /**
  * Enqueue datepicker JS functions.
@@ -74,4 +74,4 @@ function rausbar_enqueue_datepicker_script( $form, $is_ajax ) {
 		RAUSBAR_GF_ADDON_VERSION
 	);
 }
-add_action( 'gform_enqueue_scripts_1', 'rausbar_enqueue_datepicker_script', 10, 2 );
+add_action( 'gform_enqueue_scripts_2', 'rausbar_enqueue_datepicker_script', 10, 2 );

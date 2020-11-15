@@ -32,7 +32,7 @@ gform.addFilter("gform_datepicker_options_pre_init", function (
   var n = d.getHours();
   var firstAllowedDate = 0;
 
-  if (n > 19) {
+  if (n >= 19) {
     firstAllowedDate = 1;
   }
 

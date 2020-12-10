@@ -12,7 +12,7 @@ gform.addFilter("gform_datepicker_options_pre_init", function (
   optionsObj.beforeShowDay = function (date) {
     day = date.getDay();
     // 0 = sunday, 1=monday.
-    return [day != 0 && day != 1];
+    return [day != 1];
   };
 
   return optionsObj;

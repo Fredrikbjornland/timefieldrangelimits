@@ -21,8 +21,6 @@ gform.addFilter("gform_datepicker_options_pre_init", function (
 /**
  * If its past 19:00, make todays date unavailable.
  */
-
-
 gform.addFilter("gform_datepicker_options_pre_init", function (
   optionsObj,
   formId,

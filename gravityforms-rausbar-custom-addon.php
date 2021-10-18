@@ -76,7 +76,7 @@ function rausbar_validate_time_field( $result, $value, $form, $field ) {
 	
 	if ( $time == false ) {
 		$result['is_valid'] = false;
-		$result['message']  = 'Vennligst fyll inn begge feltened.';
+		$result['message']  = 'Vennligst fyll inn begge feltene.';
 	} elseif ( $time < strtotime( $min_time ) || $time > strtotime( $max_time ) ) {
 		$result['is_valid'] = false;
 		$result['message']  = "Velg et tidspunkt mellom {$min_time} og {$max_time}.";
